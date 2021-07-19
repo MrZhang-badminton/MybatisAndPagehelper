@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ The MIT License (MIT)
+  ~
+  ~ Copyright (c) 2014-2017 abel533@gmail.com
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in
+  ~ all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  ~ THE SOFTWARE.
+  -->
+
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+<!--        <setting name="cacheEnabled" value="true"/>-->
+<!--        <setting name="lazyLoadingEnabled" value="false"/>-->
+<!--        <setting name="aggressiveLazyLoading" value="true"/>-->
+        <!--<setting name="logImpl" value="LOG4J"/>-->
+    </settings>
+
+
+    <typeAliases>
+        <package name="com.zhanghua.freedomdemo.model"/>
+    </typeAliases>
+
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+<!--            <property name="dialect" value="mysql"/>-->
+<!--            &lt;!&ndash; 该参数默认为false &ndash;&gt;-->
+<!--            &lt;!&ndash; 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 &ndash;&gt;-->
+<!--            &lt;!&ndash; 和startPage中的pageNum效果一样&ndash;&gt;-->
+<!--            <property name="offsetAsPageNum" value="true"/>-->
+<!--            &lt;!&ndash; 该参数默认为false &ndash;&gt;-->
+<!--            &lt;!&ndash; 设置为true时，使用RowBounds分页会进行count查询 &ndash;&gt;-->
+<!--            <property name="rowBoundsWithCount" value="true"/>-->
+<!--            &lt;!&ndash; 设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果 &ndash;&gt;-->
+<!--            &lt;!&ndash; （相当于没有执行分页查询，但是返回结果仍然是Page类型）&ndash;&gt;-->
+<!--            <property name="pageSizeZero" value="true"/>-->
+<!--            &lt;!&ndash; 3.3.0版本可用 - 分页参数合理化，默认false禁用 &ndash;&gt;-->
+<!--            &lt;!&ndash; 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页 &ndash;&gt;-->
+<!--            &lt;!&ndash; 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据 &ndash;&gt;-->
+<!--            <property name="reasonable" value="true"/>-->
+        </plugin>
+    </plugins>
+
+
+    <environments default="development">
+        <environment id="development">
+
+<!--            <transactionManager type="JDBC">-->
+<!--                <property name="" value=""/>-->
+<!--            </transactionManager>-->
+            <transactionManager type="JDBC"/>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis_demo_db"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mappers/UserMapper.xml"/>
+    </mappers>
+
+</configuration>
