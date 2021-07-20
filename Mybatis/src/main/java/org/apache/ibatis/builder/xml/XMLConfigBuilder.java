@@ -92,6 +92,7 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   public Configuration parse() {
+    //判断是否已经翻译过
     if (parsed) {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
     }
@@ -100,14 +101,17 @@ public class XMLConfigBuilder extends BaseBuilder {
     return configuration;
   }
 
+  //入参是经过封装后的XMLConfigBuidler中的XNode节点
   private void parseConfiguration(XNode root) {
     try {
-      // issue #117 read properties first
+      //依次根绝mybatis-config.xml中的配置开始配置Configuration
       propertiesElement(root.evalNode("properties"));
       Properties settings = settingsAsProperties(root.evalNode("settings"));
       loadCustomVfs(settings);
       loadCustomLogImpl(settings);
       typeAliasesElement(root.evalNode("typeAliases"));
+
+      //这边就是将我们自己写的Plugin注册到Configuration当中
       pluginElement(root.evalNode("plugins"));
       objectFactoryElement(root.evalNode("objectFactory"));
       objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
@@ -117,6 +121,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       environmentsElement(root.evalNode("environments"));
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
       typeHandlerElement(root.evalNode("typeHandlers"));
+      //这里是将<mappers></mappers>标签下的所有mapper注册到Configuration中的MapperRegister当中
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);
@@ -368,13 +373,16 @@ public class XMLConfigBuilder extends BaseBuilder {
           String mapperPackage = child.getStringAttribute("name");
           configuration.addMappers(mapperPackage);
         } else {
+          //获取XXXMapper.xml文件的路径
           String resource = child.getStringAttribute("resource");
           String url = child.getStringAttribute("url");
           String mapperClass = child.getStringAttribute("class");
           if (resource != null && url == null && mapperClass == null) {
             ErrorContext.instance().resource(resource);
             try(InputStream inputStream = Resources.getResourceAsStream(resource)) {
+              //读取XXXMapper.xml文件，并且将其封装到XMLMapperBuilder中
               XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
+              //根据XXXMapper.xml文件开始翻译
               mapperParser.parse();
             }
           } else if (resource == null && url != null && mapperClass == null) {

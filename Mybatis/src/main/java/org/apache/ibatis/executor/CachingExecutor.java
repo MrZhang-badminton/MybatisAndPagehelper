@@ -84,6 +84,10 @@ public class CachingExecutor implements Executor {
 
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+    /**
+     * getBoundSql(parameterObject)，根据查询函数的入参对<mapper></mapper>标签里
+     * 例如<if></if>这些标签构建SQL语句 select * from xxx where id = ? 这种
+     */
     BoundSql boundSql = ms.getBoundSql(parameterObject);
     CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);
     return query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);

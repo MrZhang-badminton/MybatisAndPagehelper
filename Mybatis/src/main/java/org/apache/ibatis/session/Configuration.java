@@ -656,6 +656,7 @@ public class Configuration {
 
   public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
     StatementHandler statementHandler = new RoutingStatementHandler(executor, mappedStatement, parameterObject, rowBounds, resultHandler, boundSql);
+    //如果有定义了拦截器拦截StatementHandler的话,会将插件wrap在其"外层"，在返回包裹了插件的增强了的StatementHandler
     statementHandler = (StatementHandler) interceptorChain.pluginAll(statementHandler);
     return statementHandler;
   }
@@ -665,7 +666,10 @@ public class Configuration {
   }
 
   public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
+    //如果executorType为null，那么就设置为默认的SimpleExecutor
     executorType = executorType == null ? defaultExecutorType : executorType;
+    //上面定义defalutExecutor的时候已经将其赋值为SIMPLE，defaultExecutor已经不为null
+    //下面这行代码永远返回的是executorType，不会走到ExecutorType.SIMPLE,这边存疑
     executorType = executorType == null ? ExecutorType.SIMPLE : executorType;
     Executor executor;
     if (ExecutorType.BATCH == executorType) {
@@ -678,6 +682,9 @@ public class Configuration {
     if (cacheEnabled) {
       executor = new CachingExecutor(executor);
     }
+    /**
+     * 对于所有拦截器中拦截Executor的插件进行添加
+     */
     executor = (Executor) interceptorChain.pluginAll(executor);
     return executor;
   }
@@ -842,6 +849,8 @@ public class Configuration {
   }
 
   public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
+    //之前在XMLMapperBuilder的时候，把Mapper存到了Confuguration中的mapperRegistry当中
+    //根据XXXMapper.class去mapperRegistry中取出其代理类的工厂类，通过工厂类创建XXXMapper.class的代理类(增强类)
     return mapperRegistry.getMapper(type, sqlSession);
   }
 

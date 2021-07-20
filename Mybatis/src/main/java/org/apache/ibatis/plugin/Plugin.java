@@ -58,6 +58,7 @@ public class Plugin implements InvocationHandler {
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     try {
       Set<Method> methods = signatureMap.get(method.getDeclaringClass());
+      //根据定义的Interceptor上的@Interceptor标签里面的@Signature标签中定义的拦截的方法，判断该方法是不是要拦截的方法
       if (methods != null && methods.contains(method)) {
         return interceptor.intercept(new Invocation(target, method, args));
       }

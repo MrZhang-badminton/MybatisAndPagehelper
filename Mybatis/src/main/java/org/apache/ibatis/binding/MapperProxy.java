@@ -79,6 +79,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    //进入XXXMapper.class的代理类，执行"增强"后的方法
     try {
       if (Object.class.equals(method.getDeclaringClass())) {
         return method.invoke(this, args);

@@ -30,7 +30,10 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 /**
- * @author Clinton Begin
+ * delegate是真正的执行类
+ * 这个类是路由类，撞门用来调用真正的执行者
+ * 个人感觉本类的作用可能是调用StateHandler的地方可以统一，有解耦效果
+ * 这样便于后期扩展StatementHandler，开发新的累心给的StatementHandler
  */
 public class RoutingStatementHandler implements StatementHandler {
 
