@@ -23,6 +23,7 @@ public class BaseTest {
 	public void selectUserList() {
 
 		List<User> userList = userMapper.selectUsers();
+		List<User> userList2 = userMapper.selectUsers();
 		ListUtils.printList(userList);
 	}
 

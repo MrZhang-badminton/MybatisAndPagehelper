@@ -89,6 +89,8 @@ public class CachingExecutor implements Executor {
      * 例如<if></if>这些标签构建SQL语句 select * from xxx where id = ? 这种
      */
     BoundSql boundSql = ms.getBoundSql(parameterObject);
+
+    //创建本地缓存的Key
     CacheKey key = createCacheKey(ms, parameterObject, rowBounds, boundSql);
     return query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
   }
