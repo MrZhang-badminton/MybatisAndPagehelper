@@ -86,6 +86,10 @@ public class PooledDataSource implements DataSource {
 
   @Override
   public Connection getConnection() throws SQLException {
+    /**
+     * 这边获取的是connection的代理(增强类)
+     * popConnection方法返回的是PoolConnection类,要获得真正的connection,需要调用其内部的getProxyConnection方法
+     */
     return popConnection(dataSource.getUsername(), dataSource.getPassword()).getProxyConnection();
   }
 

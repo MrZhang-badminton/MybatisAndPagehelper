@@ -85,6 +85,10 @@ public class SimpleExecutor extends BaseExecutor {
 
   private Statement prepareStatement(StatementHandler handler, Log statementLog) throws SQLException {
     Statement stmt;
+    /**
+     * 这边获取连接conn,如数数据源设置的是pooled,如果数据库连接池中可以获取连接就从连接池中获取
+     * 如果没有的话，就创建一个连接,并且放到连接池中
+     */
     Connection connection = getConnection(statementLog);
     stmt = handler.prepare(connection, transaction.getTimeout());
     handler.parameterize(stmt);
