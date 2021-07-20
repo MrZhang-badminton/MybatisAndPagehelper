@@ -1,4 +1,5 @@
 # MybatisAndHelper
+> 最原始的代码，没有注解的纯净版本，可以自己去根据自己的理解，在阅读过程中写源码
 ### 项目描述
 + 主要是整合了Mybatis源码、PageHelper(`com.github.Pagehelper`)源码、自己准备开发的分页插件、用来测试的demo模块
 ### 项目结构
