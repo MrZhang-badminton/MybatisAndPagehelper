@@ -4,7 +4,9 @@ public class User {
 
 	private String id;
 
-	String loginName;
+	private String loginName;
+
+	private String sex;
 
 	private String name;
 
@@ -24,6 +26,14 @@ public class User {
 
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	public String getName() {
@@ -47,6 +57,7 @@ public class User {
 		return "User{" +
 				"id='" + id + '\'' +
 				", loginName='" + loginName + '\'' +
+				", sex='" + sex + '\'' +
 				", name='" + name + '\'' +
 				", password='" + password + '\'' +
 				'}';

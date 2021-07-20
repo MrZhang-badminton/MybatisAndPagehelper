@@ -7,4 +7,6 @@ import java.util.List;
 public interface UserMapper {
 
 	public List<User> selectUsers();
+
+	public List<User> selectUsersBySex(String sex);
 }

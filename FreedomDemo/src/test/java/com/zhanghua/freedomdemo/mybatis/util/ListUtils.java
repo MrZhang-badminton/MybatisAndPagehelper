@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ListUtils {
 
-	public static <T> void printList(List<T> userList){
+	public static <T> void printList(List<T> userList) {
 		userList.forEach(System.out::println);
 	}
 }

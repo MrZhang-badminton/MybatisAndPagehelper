@@ -6,7 +6,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.zhanghua.freedomdemo.mapper.UserMapper">
-   <select id="selectUsers" resultType="com.zhanghua.freedomdemo.model.User" >
-       select * from t_user
-   </select>
+    <select id="selectUsers" resultType="com.zhanghua.freedomdemo.model.User">
+        select *
+        from t_user
+    </select>
+
+    <select id="selectUsersBySex" parameterType="java.lang.String" resultType="com.zhanghua.freedomdemo.model.User">
+        select *
+        from t_user
+        where sex = #{sex}
+    </select>
 </mapper>

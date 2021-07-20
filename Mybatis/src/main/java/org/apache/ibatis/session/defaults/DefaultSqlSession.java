@@ -148,7 +148,7 @@ public class DefaultSqlSession implements SqlSession {
   private <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds, ResultHandler handler) {
     try {
       MappedStatement ms = configuration.getMappedStatement(statement);
-      //Executor即将被Plugin拦截
+      //如果定义了拦截Executor的拦截器的话，Executor即将被Plugin拦截
       return executor.query(ms, wrapCollection(parameter), rowBounds, handler);
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);

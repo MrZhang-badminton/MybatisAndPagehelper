@@ -1,6 +1,5 @@
-package com.zhanghua.freedomdemo.mybatis.base;
+package com.zhanghua.freedomdemo.mybatis.basetest;
 
-import com.github.pagehelper.PageHelper;
 import com.zhanghua.freedomdemo.mapper.UserMapper;
 import com.zhanghua.freedomdemo.model.User;
 import com.zhanghua.freedomdemo.mybatis.helper.MybatisHelper;
@@ -12,12 +11,24 @@ import java.util.List;
 
 public class BaseTest {
 
-	@Test
-	public void selectUserList(){
+	private static UserMapper userMapper;
+
+	static {
 		SqlSession sqlSession = MybatisHelper.getSqlSession();
-		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-//		PageHelper.startPage(1,1);
+		userMapper = sqlSession.getMapper(UserMapper.class);
+
+	}
+
+	@Test
+	public void selectUserList() {
+
 		List<User> userList = userMapper.selectUsers();
+		ListUtils.printList(userList);
+	}
+
+	@Test
+	public void selectUserListByParams() {
+		List<User> userList = userMapper.selectUsersBySex("m");
 		ListUtils.printList(userList);
 	}
 
