@@ -187,11 +187,14 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     int resultSetCount = 0;
     ResultSetWrapper rsw = getFirstResultSet(stmt);
 
+    //返回之前XXXMapper.xml文件中定义的resultType
     List<ResultMap> resultMaps = mappedStatement.getResultMaps();
     int resultMapCount = resultMaps.size();
     validateResultMapsCount(rsw, resultMapCount);
+    //处理第一个结果集
     while (rsw != null && resultMapCount > resultSetCount) {
       ResultMap resultMap = resultMaps.get(resultSetCount);
+      //处理单个结果集
       handleResultSet(rsw, resultMap, multipleResults, null);
       rsw = getNextResultSet(stmt);
       cleanUpAfterHandlingResultSet();
@@ -199,12 +202,15 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     }
 
     String[] resultSets = mappedStatement.getResultSets();
+    //不止一个结果集
     if (resultSets != null) {
+      //处理剩余结果集
       while (rsw != null && resultSetCount < resultSets.length) {
         ResultMapping parentMapping = nextResultMaps.get(resultSets[resultSetCount]);
         if (parentMapping != null) {
           String nestedResultMapId = parentMapping.getNestedResultMapId();
           ResultMap resultMap = configuration.getResultMap(nestedResultMapId);
+          //处理单个结果集
           handleResultSet(rsw, resultMap, null, parentMapping);
         }
         rsw = getNextResultSet(stmt);
@@ -212,7 +218,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
         resultSetCount++;
       }
     }
-
+    //如果是单个结果集，就直接返回这个结果集中对应的查询数据行的结果List
     return collapseSingleResultList(multipleResults);
   }
 

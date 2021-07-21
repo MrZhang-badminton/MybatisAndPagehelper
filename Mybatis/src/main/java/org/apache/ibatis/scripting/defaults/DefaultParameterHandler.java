@@ -60,10 +60,12 @@ public class DefaultParameterHandler implements ParameterHandler {
 
   @Override
   public void setParameters(PreparedStatement ps) {
+    //根据SQL语句中的参数，对参数类型进行处理，然后放到PrepareHandler当中
     ErrorContext.instance().activity("setting parameters").object(mappedStatement.getParameterMap().getId());
     List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
     if (parameterMappings != null) {
       for (int i = 0; i < parameterMappings.size(); i++) {
+        //获取mapper文件传入的参数,按照传入顺序
         ParameterMapping parameterMapping = parameterMappings.get(i);
         if (parameterMapping.getMode() != ParameterMode.OUT) {
           Object value;
@@ -84,6 +86,7 @@ public class DefaultParameterHandler implements ParameterHandler {
             jdbcType = configuration.getJdbcTypeForNull();
           }
           try {
+            //将参数设置到PrepareStatement中
             typeHandler.setParameter(ps, i + 1, value, jdbcType);
           } catch (TypeException | SQLException e) {
             throw new TypeException("Could not set parameters for mapping: " + parameterMapping + ". Cause: " + e, e);

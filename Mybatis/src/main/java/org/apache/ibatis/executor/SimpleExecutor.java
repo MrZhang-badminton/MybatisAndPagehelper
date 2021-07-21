@@ -59,9 +59,13 @@ public class SimpleExecutor extends BaseExecutor {
     try {
       Configuration configuration = ms.getConfiguration();
       //SQL语句处理器
+	  //SQL语句处理器
+	  //在这过程中，创建了ParameterHandle和ResultSetHandler
+	  //如果定义了相关插件
+	  //也会添加拦截StatementHandler、ParameterHandler、ResultSetHandler的插件
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
-      stmt = prepareStatement(handler, ms.getStatementLog());
       //这边就准备好了要执行的stmt
+      stmt = prepareStatement(handler, ms.getStatementLog());
       return handler.query(stmt, resultHandler);
     } finally {
       closeStatement(stmt);
@@ -90,7 +94,10 @@ public class SimpleExecutor extends BaseExecutor {
      * 如果没有的话，就创建一个连接,并且放到连接池中
      */
     Connection connection = getConnection(statementLog);
+    //根据connection,处理并获取statement
+    //这边的stmt是实际上是一个PrepareStatement
     stmt = handler.prepare(connection, transaction.getTimeout());
+    //处理参数并且放到PrepareStatement里面
     handler.parameterize(stmt);
     return stmt;
   }

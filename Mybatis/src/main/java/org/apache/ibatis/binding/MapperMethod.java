@@ -144,7 +144,8 @@ public class MapperMethod {
      * 这边实际返回的是一个map，应该是XXXMapper中的一个方法，将入参，转化为key和value
      * 比如
      * public List<User> selectUsersByDepartmentIdAndArea(@para("departmentId" String departmentId, @Param("Area") String area)
-     * 感觉应该是这个了，后面添加一个带参数的方法测试下
+     * 也可以是
+     * public List<User> selectUsersBySex(String sex)
      */
     Object param = method.convertArgsToSqlCommandParam(args);
     if (method.hasRowBounds()) {

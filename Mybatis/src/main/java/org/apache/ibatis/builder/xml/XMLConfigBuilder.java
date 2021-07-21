@@ -102,9 +102,9 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   //入参是经过封装后的XMLConfigBuidler中的XNode节点
+  //依次根绝mybatis-config.xml中的配置开始配置Configuration
   private void parseConfiguration(XNode root) {
     try {
-      //依次根绝mybatis-config.xml中的配置开始配置Configuration
       propertiesElement(root.evalNode("properties"));
       Properties settings = settingsAsProperties(root.evalNode("settings"));
       loadCustomVfs(settings);
@@ -121,6 +121,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       environmentsElement(root.evalNode("environments"));
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
       typeHandlerElement(root.evalNode("typeHandlers"));
+
       //这里是将<mappers></mappers>标签下的所有mapper注册到Configuration中的MapperRegister当中
       mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
@@ -188,6 +189,7 @@ public class XMLConfigBuilder extends BaseBuilder {
 
   private void pluginElement(XNode parent) throws Exception {
     if (parent != null) {
+      //将Plugins标签下所有的Plugin,添加到configuration中
       for (XNode child : parent.getChildren()) {
         String interceptor = child.getStringAttribute("interceptor");
         Properties properties = child.getChildrenAsProperties();
@@ -389,6 +391,7 @@ public class XMLConfigBuilder extends BaseBuilder {
               //读取XXXMapper.xml文件，并且将其封装到XMLMapperBuilder中
               XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
               //根据XXXMapper.xml文件开始翻译
+              //虽然第二种情况和第三种情况在本函数里都没有addMapper,但是在翻译的过程中都addMapper
               mapperParser.parse();
             }
           } else if (resource == null && url != null && mapperClass == null) {

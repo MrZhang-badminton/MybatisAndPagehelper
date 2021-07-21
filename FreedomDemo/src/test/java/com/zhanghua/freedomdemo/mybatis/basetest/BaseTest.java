@@ -1,5 +1,6 @@
 package com.zhanghua.freedomdemo.mybatis.basetest;
 
+import com.github.pagehelper.PageHelper;
 import com.zhanghua.freedomdemo.mapper.UserMapper;
 import com.zhanghua.freedomdemo.model.User;
 import com.zhanghua.freedomdemo.mybatis.helper.MybatisHelper;
@@ -29,6 +30,7 @@ public class BaseTest {
 
 	@Test
 	public void selectUserListByParams() {
+		PageHelper.startPage(1,1);
 		List<User> userList = userMapper.selectUsersBySex("m");
 		ListUtils.printList(userList);
 	}
