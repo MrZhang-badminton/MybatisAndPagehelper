@@ -24,6 +24,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.zhanghua</groupId>
+            <artifactId>BluePageHelper</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <artifactId>Mybatis_PageHelper</artifactId>
             <groupId>com.zhanghua</groupId>
             <version>1.0-SNAPSHOT</version>

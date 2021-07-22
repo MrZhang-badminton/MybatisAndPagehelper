@@ -5,6 +5,7 @@
 ### 项目结构
 + Mybatis源码
 + Mybatis_PageHelper源码
+  + 参考学习的com.github.PageHelper源码
 + BluePageHelper
     + 自己正在开发的分页插件
 + FreedomDemo

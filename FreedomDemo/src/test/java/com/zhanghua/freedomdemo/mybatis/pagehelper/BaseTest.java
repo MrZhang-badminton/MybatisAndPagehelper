@@ -1,4 +1,4 @@
-package com.zhanghua.freedomdemo.mybatis.basetest;
+package com.zhanghua.freedomdemo.mybatis.pagehelper;
 
 import com.github.pagehelper.PageHelper;
 import com.zhanghua.freedomdemo.mapper.UserMapper;
