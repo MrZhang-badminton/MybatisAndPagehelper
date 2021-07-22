@@ -1,4 +1,4 @@
-# Readme
+# BluePageHelper
 ## 介绍
 + 目前实现的是一个Mybatis分页插件
 + BluePageHelper集成在MybatisAndpageHelper项目下，主要是方便学习`com.github.PageHelper`同时，能够在Mybatis中写注释，方便学习
