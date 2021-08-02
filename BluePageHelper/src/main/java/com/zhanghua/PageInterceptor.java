@@ -80,22 +80,22 @@ public class PageInterceptor implements Interceptor {
 	 * @return
 	 * @throws SQLException
 	 */
-	private int getTotal(String sql, Invocation invocation, MetaObject metaObject) throws SQLException {
-		int total = 0;
-		//基于原始SQL(select * from t_user)获取记录总数
-		String countSql = "select count(0) from (" + sql + ")temp";
-
-		//使用JDBC查询count
-		Connection connection = (Connection) invocation.getArgs()[0];
-		PreparedStatement countStatement = connection.prepareStatement(countSql);
-		ParameterHandler parameterHandler = (ParameterHandler) metaObject.getValue("delegate.parameterHandler");
-		parameterHandler.setParameters(countStatement);
-		ResultSet rs = countStatement.executeQuery();
-		if (rs.next()) {
-			total = rs.getInt(1);
-		}
-		rs.close();
-		countStatement.close();
-		return total;
-	}
+//	private int getTotal(String sql, Invocation invocation, MetaObject metaObject) throws SQLException {
+//		int total = 0;
+//		//基于原始SQL(select * from t_user)获取记录总数
+//		String countSql = "select count(0) from (" + sql + ")temp";
+//
+//		//使用JDBC查询count
+//		Connection connection = (Connection) invocation.getArgs()[0];
+//		PreparedStatement countStatement = connection.prepareStatement(countSql);
+//		ParameterHandler parameterHandler = (ParameterHandler) metaObject.getValue("delegate.parameterHandler");
+//		parameterHandler.setParameters(countStatement);
+//		ResultSet rs = countStatement.executeQuery();
+//		if (rs.next()) {
+//			total = rs.getInt(1);
+//		}
+//		rs.close();
+//		countStatement.close();
+//		return total;
+//	}
 }
